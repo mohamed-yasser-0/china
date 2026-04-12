@@ -16,7 +16,7 @@ function ProtectedRoute() {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/chinaCourse/">
         <Routes>
           
           <Route path="/" element={<Login />} />
