@@ -13,7 +13,6 @@ import Login from "./components/log/logIn";
 import Register from "./components/log/Register";
 import ProfilePage from "./components/Profile/Page";
 import Layout from "./components/layout";
-import State from "./components/log/state";
 
 function ProtectedRoute() {
   if (!localStorage.getItem("token")) {
@@ -25,14 +24,13 @@ function ProtectedRoute() {
 function App() {
   return (
     <AuthProvider>
-      <Router basename="/chinaCourse/">
+      <Router basename="/">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<Layout />}>
             {/* الصفحات المحمية */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/state" element={<State />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>

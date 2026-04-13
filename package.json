@@ -1,6 +1,7 @@
 {
   "name": "course",
   "private": true,
+  "homepage": "https://github.com/mohamed-yasser-0/china.git",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
