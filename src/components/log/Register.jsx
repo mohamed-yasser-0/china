@@ -13,7 +13,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { AuthContext } from "../../context/settingContext";
 
 export default function Register() {
-  const { loginUser, formData, setFormData, setTab } = useContext(AuthContext);
+  const {formData, setFormData, setTab, regesterUser } = useContext(AuthContext);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -51,6 +51,8 @@ export default function Register() {
       setError("كلمة السر يجب أن تكون 6 أحرف على الأقل");
       return;
     }
+    regesterUser()
+    navigate("/")
   };
 
   return (
@@ -136,7 +138,7 @@ export default function Register() {
             />
 
             <Button
-              onClick={() => {loginUser();navigate("/")}}
+              onClick={() => {handleSubmit();}}
               type="submit"
               fullWidth
               variant="contained"

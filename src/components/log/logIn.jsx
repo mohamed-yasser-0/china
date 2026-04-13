@@ -13,10 +13,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { AuthContext } from "../../context/settingContext";
 
 export default function Login() {
-  const { loginUser, formData, setFormData, isLoggedIn, setTab } =
+  const { loginUser, formData, setFormData, isLoggedIn, setTab, user } =
     useContext(AuthContext);
   const navigate = useNavigate();
-
+  console.log(user)
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/home");
@@ -56,7 +56,7 @@ export default function Login() {
             <TextField
               fullWidth
               label="الآيدي"
-              name="id"
+              name="phone"
               value={formData.phone}
               onChange={handleChange}
               margin="normal"

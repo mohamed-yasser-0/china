@@ -1,0 +1,66 @@
+/* ====================== CSS Reset + Base Styles للمشروع العربي ====================== */
+
+/* Box Sizing لكل حاجة */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* إزالة المargin والpadding الافتراضي */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* الـ HTML والـ Body عشان تملى الشاشة 100% */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  direction: rtl; /* مهم جداً للعربي */
+  text-align: right;
+  font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* منع الـ horizontal scroll */
+}
+
+/* دعم smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* إزالة أي borders أو outlines افتراضية */
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  outline: none;
+  border: none;
+}
+
+/* للـ MUI عشان يشتغل RTL بشكل أفضل */
+#root {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* إذا كنت بتستخدم AppBar أو Drawer، ده بيساعد يملى الشاشة */
+.MuiDrawer-paper {
+  border: none !important;
+}
+
+/* Hover effects عامة أنظف */
+.MuiCard-root {
+  transition: all 0.3s ease;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
