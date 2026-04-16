@@ -6,7 +6,6 @@
 *::after {
   box-sizing: border-box;
 }
-
 /* إزالة المargin والpadding الافتراضي */
 * {
   margin: 0;
@@ -29,7 +28,7 @@ body {
 }
 
 /* دعم smooth scrolling */
-html {
+html, body {
   scroll-behavior: smooth;
 }
 

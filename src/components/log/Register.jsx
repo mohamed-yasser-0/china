@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
@@ -13,10 +13,8 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { AuthContext } from "../../context/settingContext";
 
 export default function Register() {
-  const {formData, setFormData, setTab, regesterUser } = useContext(AuthContext);
+  const { formData, setFormData, registerUser } = useContext(AuthContext);
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,33 +24,10 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  const handleSubmit = () => {
+    registerUser();
 
-    // التحقق من المدخلات
-    if (
-      !formData.name ||
-      !formData.phone ||
-      !formData.password ||
-      !formData.confirmPassword
-    ) {
-      setError("يرجى ملء جميع الحقول");
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("كلمة السر وتأكيدها غير متطابقين");
-      return;
-    }
-
-    if (formData.password.length < 3) {
-      setError("كلمة السر يجب أن تكون 6 أحرف على الأقل");
-      return;
-    }
-    regesterUser()
-    navigate("/")
+    navigate("/logIn");
   };
 
   return (
@@ -82,18 +57,6 @@ export default function Register() {
             </Typography>
           </Box>
 
-          {error && (
-            <Alert severity="error" sx={{ mb: 3 }}>
-              {error}
-            </Alert>
-          )}
-
-          {success && (
-            <Alert severity="success" sx={{ mb: 3 }}>
-              {success}
-            </Alert>
-          )}
-
           <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
@@ -107,7 +70,7 @@ export default function Register() {
 
             <TextField
               fullWidth
-              label="الآيدي (ID)"
+              label="ID"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
@@ -126,20 +89,8 @@ export default function Register() {
               required
             />
 
-            <TextField
-              fullWidth
-              label="تأكيد كلمة السر"
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              margin="normal"
-              required
-            />
-
             <Button
-              onClick={() => {handleSubmit();}}
-              type="submit"
+              onClick={handleSubmit}
               fullWidth
               variant="contained"
               size="large"

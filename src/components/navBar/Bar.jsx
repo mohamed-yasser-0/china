@@ -6,20 +6,24 @@ import {
   Toolbar,
   IconButton,
   Tooltip,
+  Button,
 } from "@mui/material";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import DownloadIcon from "@mui/icons-material/Download";
+import RestorePageIcon from '@mui/icons-material/RestorePage';
 import { AuthContext } from "../../context/settingContext";
 import { useContext } from "react";
 
 // استيراد المكتبات الجديدة
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Bar() {
-  const { logout, setSnackbar, user } = useContext(AuthContext);
+  const { logout, setSnackbar, user, dayes } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     if (logout) logout();
@@ -96,6 +100,7 @@ export default function Bar() {
     });
   };
 
+  // console.log(dayes?.days)
   return (
     <AppBar
       position="fixed"
@@ -111,10 +116,22 @@ export default function Bar() {
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Typography variant="h5" fontWeight="bold">
-          {user?.role === "ADMIN"?"درجات الطلاب":`مرحبأ ${user?.name}`}
+          {user?.role === "ADMIN" ? "درجات الطلاب" : `مرحبأ ${user?.name}`}
         </Typography>
 
         <Box sx={{ display: "flex", gap: 1 }}>
+          <Tooltip
+            sx={{ display: user?.role === "ADMIN" ? "flex" : "none" }}
+            title="سجل الايام"
+          >
+            <IconButton
+              component={Link}
+              to={`/daysview`}
+              color="inherit"
+            >
+              <RestorePageIcon />
+            </IconButton>
+          </Tooltip>
           <Tooltip
             sx={{ display: user?.role === "ADMIN" ? "flex" : "none" }}
             title="تحديث البيانات"
@@ -123,7 +140,6 @@ export default function Bar() {
               <RefreshIcon />
             </IconButton>
           </Tooltip>
-
           <Tooltip
             sx={{ display: user?.role === "ADMIN" ? "flex" : "none" }}
             title="تحميل كـ Excel"
@@ -132,7 +148,6 @@ export default function Bar() {
               <DownloadIcon />
             </IconButton>
           </Tooltip>
-
           <Tooltip title="تسجيل الخروج">
             <IconButton
               color="inherit"

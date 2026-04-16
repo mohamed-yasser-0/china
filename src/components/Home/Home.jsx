@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -28,21 +28,16 @@ import ProfilePage from "../Profile/Page";
 import AlertDialog from "../bobab/Dialog";
 
 export default function Home() {
-  const { daysData, setDaysData, dayes, user } =
+  const { daysData, setDaysData, user, currentDay } =
     React.useContext(AuthContext);
 
-  const day = dayes.days?.[1];
   const navigate = useNavigate();
-
-  const [currentDay, setCurrentDay] = useState(1);
-
-  // بيانات الأيام (كل يوم يحتوي على array من الطلاب)
 
   useEffect(() => {
     localStorage.setItem("daysData", JSON.stringify(daysData));
   }, [daysData]);
 
-  const date = daysData[1][0].date;
+  // const dates = daysData[1][0]?.date;
   // useEffect(() => {
   //   if (dayes?.days) {
   //     setDaysData({
@@ -53,7 +48,7 @@ export default function Home() {
 
   // الطلاب في اليوم الحالي (مسطح)
   const students = useMemo(() => {
-    const dayData = daysData[currentDay] || [];
+    const dayData = daysData?.[currentDay];
     return dayData.flatMap((item) => item.students || []);
   }, [daysData, currentDay]);
 
@@ -70,20 +65,20 @@ export default function Home() {
 
   // ==================== دوال التحكم ====================
 
-  const handleNameChange = (studentId, newName) => {
-    setDaysData((prev) => {
-      const newData = { ...prev };
-      if (newData[currentDay]) {
-        newData[currentDay] = newData[currentDay].map((dayItem) => ({
-          ...dayItem,
-          students: dayItem.students.map((s) =>
-            s.studentId === studentId ? { ...s, name: newName } : s,
-          ),
-        }));
-      }
-      return newData;
-    });
-  };
+  // const handleNameChange = (studentId, newName) => {
+  //   setDaysData((prev) => {
+  //     const newData = { ...prev };
+  //     if (newData[currentDay]) {
+  //       newData[currentDay] = newData[currentDay].map((dayItem) => ({
+  //         ...dayItem,
+  //         students: dayItem.students.map((s) =>
+  //           s.studentId === studentId ? { ...s, name: newName } : s,
+  //         ),
+  //       }));
+  //     }
+  //     return newData;
+  //   });
+  // };
 
   const handleScoreChange = (studentId, field, value) => {
     setDaysData((prev) => {
@@ -129,10 +124,11 @@ export default function Home() {
           flexDirection: "column",
         }}
       >
+        {/* {console.log(daysData[currentDay]?.[0])} */}
         <TextField
           type="date"
           label="تاريخ اليوم"
-          value={daysData[currentDay]?.[0]?.date || today}
+          value={daysData[currentDay]?.[0]?.date}
           onChange={(e) =>
             setDaysData((prev) => ({
               ...prev,
@@ -184,7 +180,7 @@ export default function Home() {
               عدد الطلاب: <strong>{students.length}</strong>
             </Typography>
 
-            <AlertDialog/>
+            <AlertDialog />
           </Box>
 
           {/* الجدول */}
@@ -193,13 +189,31 @@ export default function Home() {
               <Table stickyHeader sx={{ minWidth: 650 }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell sx={{ fontWeight: "bold", width: 70 }}>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        width: 70,
+                      }}
+                    >
                       رقم
                     </TableCell>
-                    <TableCell sx={{ fontWeight: "bold", width: 130 }}>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        width: 130,
+                      }}
+                    >
                       رقم الجلوس
                     </TableCell>
-                    <TableCell sx={{ fontWeight: "bold", minWidth: 220 }}>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        width: 130,
+                      }}
+                    >
                       اسم الطالب
                     </TableCell>
                     <TableCell
@@ -245,8 +259,14 @@ export default function Home() {
                       >
                         {row.studentId}
                       </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ fontWeight: "bold", fontSize: "1.05rem" }}
+                      >
+                        {row.name}
+                      </TableCell>
 
-                      <TableCell>
+                      {/* <TableCell>
                         <input
                           type="text"
                           value={row.name || ""}
@@ -261,7 +281,7 @@ export default function Home() {
                             fontSize: "1rem",
                           }}
                         />
-                      </TableCell>
+                      </TableCell> */}
 
                       <TableCell align="center">
                         <input

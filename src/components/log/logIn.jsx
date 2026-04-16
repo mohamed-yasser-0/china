@@ -13,13 +13,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { AuthContext } from "../../context/settingContext";
 
 export default function Login() {
-  const { loginUser, formData, setFormData, isLoggedIn, setTab, user } =
+  const { loginUser, formData, setFormData, isLoggedIn, user } =
     useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/home");
-      console.log(user);
+      // console.log(user);
     }
   }, [isLoggedIn]);
 
